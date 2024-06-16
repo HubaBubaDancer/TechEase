@@ -15,6 +15,16 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 
+
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "TechEase", Version = "v1" });
+});
+
+
+IronXL.License.LicenseKey = "IRONSUITE.IROBOT.EXE.GMAIL.COM.10093-6D4D84730A-BURGOGPAFNMNN4UI-3SXSJTVU6MOM-43M5ZTIKPKBS-PFD64NKVGBTX-ZHUIFBMMT6CZ-XTZG7GSG4UWJ-EGONSC-TQYWIS7QH46MUA-DEPLOYMENT.TRIAL-IJRUKJ.TRIAL.EXPIRES.15.JUL.2024";
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,8 +44,18 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TechEase v1");
+});
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
