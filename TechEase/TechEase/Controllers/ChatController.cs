@@ -1,6 +1,7 @@
 using System.Text.Json;
 using IronXL;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TechEase.Models;
 
@@ -10,10 +11,11 @@ namespace TechEase.Controllers;
 public class ChatController : ControllerBase
 {
 
-
+    //Task<List<List<Product>>>
+    [EnableCors]
     [AllowAnonymous]
     [HttpPost("/ask")]
-    public async Task<List<List<Product>>> Asking([FromBody] string question)
+    public async Task<IActionResult> Asking([FromBody] string question)
     {
         var chat = new AmChat();
         var answer = await chat.GetAnswer(question);
@@ -57,9 +59,8 @@ public class ChatController : ControllerBase
             listt.Add(product3);
             
             List<List<Product>> mainList = new List<List<Product>>();
+            return Ok(mainList);
             mainList.Add(listt);
-            return mainList;
-
         } else 
         {
             string[] str1 = answer.Split('\n').Skip(1).ToArray();
@@ -100,7 +101,7 @@ public class ChatController : ControllerBase
                 mainList.Add(listt);
                 listt = new List<Product>();
             }
-            return mainList;
+            return Ok(mainList);
         }
         
         
@@ -158,24 +159,7 @@ public class ChatController : ControllerBase
     [HttpGet("/get-lists")]
     public async Task<string> GetLists()
     {
-        Product product = new Product
-        {
-            Name = "TestName",
-            Description = "TEst",
-            Price = "12345",
-            Image = "srcfdgdfg"
-        };
-
-        List<Product> listt = new List<Product>();
-        listt.Add(product);
-        listt.Add(product);
-        listt.Add(product);
-
         
-        List<List<Product>> mainList = new List<List<Product>>();
-        
-        mainList.Add(listt);
-        mainList.Add(listt);
         
 
 

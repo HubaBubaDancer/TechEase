@@ -34,7 +34,7 @@ public class AmChat
             Headers =
             {
                 { HttpRequestHeader.ContentType.ToString(), "application/json" },
-                { HttpRequestHeader.Authorization.ToString(), "Bearer " + "sk-tech-ease-zMnBGQWGKMIa7cjkc1vkT3BlbkFJmZRtjhsCTBuGxXcudAVi"}, ///////////////////////
+                { HttpRequestHeader.Authorization.ToString(), "Bearer " + "API_KEY"}, ///////////////////////
             },
             Content = new StringContent(jsonContent, Encoding.UTF8, "application/json")
         };
